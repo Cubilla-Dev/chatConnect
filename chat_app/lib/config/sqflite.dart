@@ -31,8 +31,8 @@ class DatabaseHelper {
         age INTEGER
       )
     ''');
-    final dbHelper = DatabaseHelper();
-    final db = await dbHelper.database;
+    // final dbHelper = DatabaseHelper();
+    // final db = await dbHelper.database;
 
 // Insertar datos
     await db.insert('my_table', {'name': 'John', 'age': 30});
