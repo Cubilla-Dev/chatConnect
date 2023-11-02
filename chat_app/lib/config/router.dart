@@ -1,6 +1,7 @@
 import 'package:chat_app/presentation/screens/Home.dart';
 import 'package:chat_app/presentation/screens/Login.dart';
 import 'package:chat_app/presentation/screens/Register.dart';
+import 'package:chat_app/presentation/socket/chat_socket.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,7 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
   GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
-        return const Home();
+        return ChatSocket();
       }),
   GoRoute(
       path: '/register',
