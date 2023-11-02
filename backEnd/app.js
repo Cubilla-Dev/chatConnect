@@ -15,7 +15,9 @@ const Sequelize = require('./src/util/config')
 //     })
 
 
-server.listen(4000, () => console.log('listening on 127.0.0.1:4000'));
+server.listen(4000, '192.168.0.4', () => {
+    console.log('Listening on 192.168.0.4:4000');
+});
 
 
 //para ahcer tareas automatizadas
