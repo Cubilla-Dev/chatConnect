@@ -1,47 +1,36 @@
-const app = require('express')
-const {server} = require('./src/util/conexionSocket')
-const Sequelize = require('./src/util/config')
-// const router = require('./src/routers/chat')
+const express = require('express');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+// const io = require('socket.io')(server, {
+//     cors: {
+//         origin: "*",  
+//         methods: ["GET", "POST"]
+//     }
+// });
 
-// app.user(router)
+const messages = [];
+// const conecciones = {};
+// const activosConecciones = {};
 
-// Sequelize
-//     .authenticate()
-//     .then(()=>{
-//         console.log('Conexion exitosa con el db')
-//     })
-//     .catch((error)=>{
-//         console.error('No se pudo conectar con la base de datos ', error)
-//     })
+io.on('connection', (socket) => {
+    console.log('connected');
+    const username = socket.handshake.query.username
+    socket.on('message', (data) => {
+        const message = {
+            message: data.message,
+            senderUsername: username,
+            sentAt: Date.now()
+        }
+        console.log('llego el sms')
+        messages.push(message)
+        console.log(message)
+        io.emit('message', message)
+    })
+})
 
-
-server.listen(4000, '192.168.0.4', () => {
-    console.log('Listening on 192.168.0.4:4000');
-});
-
-
-//para ahcer tareas automatizadas
-// import cron from "node-cron"; 
-// import {redisSave} from "./redisSave.js" 
-// import {socketServices} from "../services/socketService.js" 
-// import {cointGenerate} from "./cointGenerator.js" 
-// import client from "../db/db-config.js"; 
-// const respawn=async()=>{      
-//     const room=JSON.parse(await client.get('room'))      
-//     let job1 = cron.schedule('0 /1 * *',async() => {                  
-//         if(room){                 
-//             //obtiene todas las salas             
-//             const cointNumber=room.coins_to_generate             
-//             const area=room.area_3D             
-//             const cointUbication=cointGenerate(cointNumber,area)                          
-//             //agrega las monedas a la sala             
-//             room.cointUbication=cointUbication             
-//             const serializer=JSON.stringify(room)             
-//             //guardado en la base de datos             
-//             redisSave("room",serializer)             
-//             socketServices("respwn-coint","se genero un nuevo set de monedas","emit")             
-//             console.log("Nuevo set monedas");             
-//         }        
-//     });             
-//     job1.start();
-// }
+server.listen(3000, ()=>{
+    console.log('Sservidor en linea en el puert0 3000')
+})

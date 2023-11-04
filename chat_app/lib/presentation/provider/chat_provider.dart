@@ -1,8 +1,12 @@
+import 'package:chat_app/config/message.dart';
 import 'package:flutter/material.dart';
 
 class ChatProvider extends ChangeNotifier {
-  String a = 'holaaa';
-  void func() {
-    print('funcion se llama');
+  final List<Message> _message = [];
+  List<Message> get message => _message;
+
+  addNewMessage(Message message) {
+    _message.add(message);
+    notifyListeners();
   }
 }

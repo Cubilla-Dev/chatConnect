@@ -1,7 +1,7 @@
 'use strict';
 const io = require('socket.io-client');
 
-var socket = io('ws://127.0.0.1:4000', {
+var socket = io('ws://192.168.0.14:4000', {
     transports: ['websocket'],
     autoConnect: false
 });
