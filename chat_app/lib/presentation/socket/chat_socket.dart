@@ -51,7 +51,7 @@ class _SocketState extends State<ChatSocket> {
     super.initState();
     //donde se hace la conexion
     _socket = IO.io(
-      'http://localhost:3000',
+      'http://192.168.0.14:5000',
       IO.OptionBuilder().setTransports(['websocket']).setQuery(
           {'username': widget.username}).build(),
     );
