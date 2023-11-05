@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class ChatSocket extends StatefulWidget {
-  final String username = 'cubilla';
+  final String username = 'Adolfo';
 
   // const ChatSocket({super.key, required this.username});
   @override
@@ -68,7 +68,7 @@ class _SocketState extends State<ChatSocket> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Socke')),
+        appBar: AppBar(title: Text('Socket')),
         body: Column(
           children: [
             Expanded(
@@ -76,7 +76,7 @@ class _SocketState extends State<ChatSocket> {
                 builder: (_, provider, __) => ListView.separated(
                   padding: const EdgeInsets.all(16),
                   itemBuilder: (context, index) {
-                    final message = provider.message[index];
+                    final message = provider.messages[index];
                     return Wrap(
                       alignment: message.senderUsername == widget.username
                           ? WrapAlignment.end
@@ -110,10 +110,38 @@ class _SocketState extends State<ChatSocket> {
                   separatorBuilder: (_, index) => const SizedBox(
                     height: 5,
                   ),
-                  itemCount: provider.message.length,
+                  itemCount: provider.messages.length,
                 ),
               ),
-            )
+            ),
+            Container(
+              decoration: BoxDecoration(color: Colors.grey.shade200),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+              child: SafeArea(
+                  child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _messageInputController,
+                      decoration: const InputDecoration(
+                        hintText: 'Tyoe your message here...',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      if (_messageInputController.text.trim().isNotEmpty) {
+                        _sendMessage();
+                      }
+                    },
+                    icon: const Icon(Icons.send),
+                  )
+                ],
+              )),
+            ),
           ],
         ));
   }
