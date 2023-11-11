@@ -5,17 +5,22 @@ const User = Sequelize.define('user',{
         type: Sequelize.INTEGER,
         primaryKey: true
     },
-    nombre: {
+    name: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    contrasena: {
+    lastname:{
+        type:Sequelize.STRING,
+        allowNull: false
+    },
+    email: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    correo: {
+    passHash: {
         type: Sequelize.STRING,
         allowNull: false
-    }
+    },
 })
 
+module.exports = User;
