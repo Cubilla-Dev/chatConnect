@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:dio/dio.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -22,8 +23,25 @@ class Campos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController ContraController = TextEditingController();
-    TextEditingController CorreoController = TextEditingController();
+    TextEditingController correoController = TextEditingController();
+    TextEditingController contraController = TextEditingController();
+
+    void sendLogin() async {
+      final Map<String, dynamic> dataRegister = {
+        "password": contraController.text,
+        "email": correoController.text,
+      };
+
+      try {
+        //falta obtener el token y guardarlo
+        final Response response = await Dio()
+            .post('http://192.168.0.14:5000/login', data: dataRegister);
+        print("La data fue enviada. Estado: ${response.statusCode}");
+      } catch (error) {
+        print("Error al enviar la data: $error");
+      }
+    }
+
     return Expanded(
       child: Column(
         children: [
@@ -48,7 +66,7 @@ class Campos extends StatelessWidget {
             child: Column(
               children: [
                 TextFormField(
-                    controller: CorreoController,
+                    controller: correoController,
                     decoration: InputDecoration(
                         labelText: 'Correo',
                         hintText: 'Ingresa su correo',
@@ -60,7 +78,7 @@ class Campos extends StatelessWidget {
                   height: 10,
                 ),
                 TextFormField(
-                  controller: ContraController,
+                  controller: contraController,
                   decoration: InputDecoration(
                       labelText: 'Contraseña',
                       hintText: 'Ingresa su correo',

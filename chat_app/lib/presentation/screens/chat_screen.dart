@@ -11,6 +11,7 @@ class ChatScreen extends StatelessWidget {
         leading: const Padding(
           padding: EdgeInsets.all(4.0),
           child: CircleAvatar(
+            //poner la url para la imagen de fondo
             backgroundImage: NetworkImage('url'),
           ),
         ),

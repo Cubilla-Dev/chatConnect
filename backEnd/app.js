@@ -7,7 +7,8 @@ const io = new Server(server);
 
 const morgan = require('morgan')
 const router = require('./src/routers/auntenticacion')
-const connectDatabase = require('./src/config/conexionSequelize')
+const db_sequelize = require('./src/config/conexionSequelize')
+const cors = require('cors')
 
 //config
 app.use(express.json());
@@ -18,6 +19,10 @@ app.use(morgan("dev"));
 //routes
 app.use(router);
 
+//? Authenticate DB
+db_sequelize.authenticate()
+    .then(() => console.log('Database Authenticated'))
+    .catch((err) => console.log(err))
 
 const messages = [];
 // const conecciones = {};
@@ -39,12 +44,8 @@ io.on('connection', (socket) => {
     })
 })
 
-connectDatabase()
-    .then(()=>{
-        server.listen(5000, ()=>{
-            console.log('Servidor en linea en el puerto')
-        })
-    })
-    .catch(()=>{
-        console.error('Error al conectarse a la base de datos: ', error)
-    })
+
+
+server.listen(5000, ()=>{
+    console.log('Servidor en linea en el puerto')
+})

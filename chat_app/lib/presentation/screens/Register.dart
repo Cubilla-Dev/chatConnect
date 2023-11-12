@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:dio/dio.dart';
 
 class Register extends StatelessWidget {
   const Register({super.key});
@@ -23,10 +24,29 @@ class Campos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController nombreController = TextEditingController();
-    TextEditingController apelidoController = TextEditingController();
+    TextEditingController apellidoController = TextEditingController();
     TextEditingController correoController = TextEditingController();
     TextEditingController contraController = TextEditingController();
     TextEditingController verifiContraController = TextEditingController();
+
+    void sendRegister() async {
+      final Map<String, dynamic> dataRegister = {
+        "name": nombreController.text,
+        "lastname": apellidoController.text,
+        "password": contraController.text,
+        "email": correoController.text,
+        "passVerifi": verifiContraController.text,
+      };
+
+      try {
+        final Response response = await Dio()
+            .post('http://192.168.0.14:5000/register', data: dataRegister);
+        print("La data fue enviada. Estado: ${response.statusCode}");
+      } catch (error) {
+        print("Error al enviar la data: $error");
+      }
+    }
+
     return Expanded(
       child: Column(
         children: [
@@ -66,7 +86,7 @@ class Campos extends StatelessWidget {
                   height: 10,
                 ),
                 TextFormField(
-                  controller: apelidoController,
+                  controller: apellidoController,
                   decoration: InputDecoration(
                       labelText: 'Apellido',
                       hintText: 'Ingresa su Apellido',

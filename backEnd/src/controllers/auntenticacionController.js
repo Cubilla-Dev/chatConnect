@@ -4,7 +4,7 @@ const createToken = require('../util/createToken')
 const dotenv = require('dotenv')
 dotenv.config()
 
-const autUser = class {
+const autUser = {
     async login(req, res){
         const { email, password } = req.body;
         try{
@@ -29,7 +29,7 @@ const autUser = class {
                 .status(409)
                 .send({message: 'El usuario no puedo iniciar sesion'})
         }
-    }
+    },
 
     async register(req, res){
         try{

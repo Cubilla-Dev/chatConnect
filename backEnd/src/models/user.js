@@ -1,24 +1,26 @@
-const { Sequelize } = require("sequelize");
+const { DataTypes } = require('sequelize');
+const db_sequelize = require('../config/conexionSequelize')
 
-const User = Sequelize.define('user',{
+const User = db_sequelize.define('user_register',{
     id_user: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true
     },
     name: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
     lastname:{
-        type:Sequelize.STRING,
+        type:DataTypes.STRING,
         allowNull: false
     },
     email: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
     passHash: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
 })
