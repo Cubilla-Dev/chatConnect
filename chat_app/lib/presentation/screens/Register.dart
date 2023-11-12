@@ -35,7 +35,7 @@ class Campos extends StatelessWidget {
         "lastname": apellidoController.text,
         "password": contraController.text,
         "email": correoController.text,
-        "passVerifi": verifiContraController.text,
+        "verifiPassword": verifiContraController.text,
       };
 
       try {

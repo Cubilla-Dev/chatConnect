@@ -18,11 +18,14 @@ app.use(cors("*"));
 app.use(morgan("dev"));
 //routes
 app.use(router);
-
-//? Authenticate DB
-db_sequelize.authenticate()
-    .then(() => console.log('Database Authenticated'))
-    .catch((err) => console.log(err))
+//sincronizacion de la base de datos
+db_sequelize.sync()
+    .then(()=>{
+        console.log('Base de datos sincronizada')
+    })
+    .catch((error)=>{
+        console.error('Error en la sincronizacion a la base de datos ', error)
+    })
 
 const messages = [];
 // const conecciones = {};
