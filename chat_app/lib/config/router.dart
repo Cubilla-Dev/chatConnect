@@ -12,7 +12,7 @@ final GoRouter router = GoRouter(routes: <RouteBase>[
         return Register();
       }),
   GoRoute(
-      path: '/register',
+      path: '/login',
       builder: (BuildContext context, GoRouterState state) {
         return Login();
       }),
